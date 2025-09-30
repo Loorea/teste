@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'thermometer_widget.dart';
+
 class ThermometerScreen extends StatefulWidget {
   const ThermometerScreen({super.key});
 
@@ -98,7 +99,6 @@ class _ThermometerScreenState extends State<ThermometerScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNavBar(),
     );
   }
 
@@ -131,7 +131,7 @@ class _ThermometerScreenState extends State<ThermometerScreen> {
               width: 45,
             ),
           ),
-          
+
           // Item 2: A Coluna com as informações dinâmicas
           Positioned(
             top: 60,
@@ -158,32 +158,9 @@ class _ThermometerScreenState extends State<ThermometerScreen> {
       ),
     );
   }
-
-  // Cole aqui a sua função _buildBottomNavBar()
-  BottomNavigationBar _buildBottomNavBar() {
-    // ... seu código da barra de navegação ...
-    // (Pode usar a versão melhorada que te mostrei antes)
-    return BottomNavigationBar(
-      currentIndex: _selectedIndex,
-      onTap: (index) {
-        setState(() { _selectedIndex = index; });
-      },
-      type: BottomNavigationBarType.fixed,
-      backgroundColor: const Color(0xFFD0B2E8),
-      selectedItemColor: Colors.white,
-      unselectedItemColor: Colors.white.withOpacity(0.7),
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Início'),
-        BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Sentimentos'),
-        BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Jornada'),
-        BottomNavigationBarItem(icon: Icon(Icons.playlist_play), label: 'Playlist'),
-        BottomNavigationBarItem(icon: Icon(Icons.thermostat), label: 'Termômetro'),
-      ],
-    );
-  }
 }
 
-  /*Widget _buildDiagnosticCard() {
+/*Widget _buildDiagnosticCard() {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -227,4 +204,4 @@ class _ThermometerScreenState extends State<ThermometerScreen> {
     );
   }*/
 
-  // Não se esqueça de importar o pacote no topo do arquiv
+// Não se esqueça de importar o pacote no topo do arquiv

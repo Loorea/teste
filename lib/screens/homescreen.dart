@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-// 1. Removido o MaterialApp que estava aqui.
-//    HomeScreen agora retorna diretamente o widget 'Main'.
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // O nome do usuário pode ser passado aqui se viesse de outra tela,
-    // por exemplo, da tela de login.
     return const Main(nome: "Dani");
   }
 }
 
-// 2. Convertido para StatefulWidget para gerenciar o estado da navegação.
 class Main extends StatefulWidget {
   final String nome;
   const Main({super.key, required this.nome});
@@ -23,387 +19,435 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  // 3. Adicionado o índice para controlar o item selecionado.
   int _selectedIndex = 0;
-
-  // 4. Função para tratar o clique nos itens da barra de navegação.
   void _onItemTapped(int index) {
-    // Evita reconstruir a tela se já estivermos nela
     if (index == _selectedIndex) return;
-    
+
     setState(() {
       _selectedIndex = index;
     });
 
     switch (index) {
       case 0:
-        // Se a home não for a primeira na pilha, use Navigator.pushNamed(context, '/home');
+        Navigator.pushNamed(context, '/home');
         break;
       case 1:
-        // Navegar para Sentimentos (exemplo)
-        // Navigator.pushNamed(context, '/sentimentos');
+        Navigator.pushNamed(context, '/sentimentos');
         break;
       case 2:
-        // Navegar para Jornada (exemplo)
-        // Navigator.pushNamed(context, '/jornada');
+        Navigator.pushNamed(context, '/jornada');
         break;
       case 3:
-        // Navegar para Playlist (exemplo)
-        // Navigator.pushNamed(context, '/playlist');
+        Navigator.pushNamed(context, '/playlist');
         break;
       case 4:
-        // 5. Ação de navegação para a tela do termômetro.
-        Navigator.pushNamed(context, '/thermometer').then((_) {
-          // Quando voltar da tela do termômetro, reseta o índice para 'Início'
-          if (mounted) {
-            setState(() {
-              _selectedIndex = 0;
-            });
-          }
-        });
+        Navigator.pushNamed(context, '/thermometer');
+        break;
+      case 5:
+        Navigator.pushNamed(context, '/contato');
         break;
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
     String dataHoje = "terça feira, 26 de setembro";
 
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF70CFFF),
-              Color(0xFFC48DEF),
-              Color(0xFFDD88E7),
+      backgroundColor: Colors.grey[50],
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        title: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: const Color(0xFFFFD54F),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: const Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "⭐ 120 XP",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                  fontSize: 14,
+                ),
+              ),
             ],
           ),
         ),
-        // O resto do corpo do seu Scaffold permanece exatamente o mesmo...
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Saudação
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Saudação + XP
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Olá👋",
-                            style: TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                          Text(
-                            dataHoje,
-                            style: const TextStyle(
-                              color: Colors.black54,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFFD54F),
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 4,
-                              offset: const Offset(2, 2),
-                            ),
-                          ],
-                        ),
-                        child: const Text(
-                          "⭐ 120 XP",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  // Amigo emocional
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 6,
-                          offset: const Offset(2, 2),
-                        ),
-                      ],
-                    ),
-                    child: const Column(
-                      children: [
-                        Text("🐶✨", style: TextStyle(fontSize: 40)),
-                        SizedBox(height: 8),
-                        Text(
-                          "Seu amigo emocional está aqui!",
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 233, 30, 179),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          "Como está se sentindo hoje?",
-                          style: TextStyle(color: Colors.black87),
-                        ),
-                      ],
+                  const Text(
+                    "Olá",
+                    style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
                     ),
                   ),
-
-                  const SizedBox(height: 20),
-
-                  // Avatar e Level
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: 70,
-                          decoration: BoxDecoration(
-                            color: const Color.fromRGBO(92, 203, 96, 1),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              "🐱 Avatar\nPersonalize",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Container(
-                          height: 70,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF9575CD),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              "🏆 Level\nNível 3",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 20),
-
-                 // Registrar sentimentos
-                  Container(
-                    width: double.infinity,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [
-                          Color(0xFFAC54F0),
-                          Color(0xFFCC4FC5),
-                          Color(0xFFE848A0),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 4,
-                          offset: Offset(2, 2),
-                        ),
-                      ],
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "♥ Registrar Sentimentos",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-
-                  // Termômetro e Playlists
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: 70,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 4,
-                                offset: Offset(2, 2),
-                              ),
-                            ],
-                          ),
-                          child: const Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.bar_chart, color: Colors.blue),
-                                SizedBox(height: 4),
-                                Text("Termômetro",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Container(
-                          height: 70,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 4,
-                                offset: Offset(2, 2),
-                              ),
-                            ],
-                          ),
-                          child: const Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.music_note, color: Color.fromRGBO(76, 175, 80, 1)),
-                                SizedBox(height: 4),
-                                Text("Playlists",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  // Contato de apoio
-                  Container(
-                    width: double.infinity,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: const Color.fromRGBO(92, 203, 96, 1),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "Contato de Apoio - NAE",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  // Semana Atual
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 6,
-                          offset: const Offset(2, 2),
-                        ),
-                      ],
-                    ),
-                    child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Semana Atual",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        SizedBox(height: 15),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(children: [Text("Seg"), Text("😊")]),
-                            Column(children: [Text("Ter"), Text("🥳")]),
-                            Column(children: [Text("Qua"), Text("🥰")]),
-                            Column(children: [Text("Qui"), Text("😂")]),
-                            Column(children: [Text("Sex"), Text("😅")]),
-                            Column(children: [Text("Sab"), Text("😂")]),
-                            Column(children: [Text("Dom"), Text("🤢")]),
-                          ],
-                        ),
-                      ],
+                  const SizedBox(height: 4),
+                  Text(
+                    dataHoje,
+                    style: const TextStyle(
+                      color: Colors.black54,
+                      fontSize: 14,
                     ),
                   ),
                 ],
               ),
-            ),
+
+              const SizedBox(height: 30),
+
+              // Amigo emocional
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFF69F0AE),
+                      Color(0xFFB9F6CA),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: const Column(
+                  children: [
+                    Icon(CupertinoIcons.paw,
+                        color: Color(0xFF00011B), size: 28),
+                    SizedBox(height: 12),
+                    Text(
+                      "Seu amigo emocional está aqui!",
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      "Como está se sentindo hoje?",
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              // Avatar e Level
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFA3E0FF),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.08),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: const Center(
+                        child: Text(
+                          "Avatar\nPersonalize",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Container(
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFA3E0FF),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.08),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: const Center(
+                        child: Text(
+                          "Level\nNível 3",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 20),
+
+              // Registrar sentimentos
+              Container(
+                width: double.infinity,
+                height: 65,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xFFF8B5FA),
+                      Color(0xFFF8CEF9),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: const Center(
+                  child: Text(
+                    "Registrar Sentimentos",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black87,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              // Termômetro e Playlists
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.08),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.bar_chart,
+                                color: Color(0xFFA3E0FF), size: 28),
+                            SizedBox(height: 6),
+                            Text(
+                              "Termômetro",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Container(
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.08),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.music_note,
+                                color: Color(0xFFF8B5FA), size: 28),
+                            SizedBox(height: 6),
+                            Text(
+                              "Playlists",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 20),
+
+              // Semana Atual
+              Container(
+                padding: const EdgeInsets.all(20),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xFFF8B5FA),
+                      Color(0xFFF8CEF9),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Semana Atual",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(children: [
+                          Text("Seg",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black54)),
+                          SizedBox(height: 8),
+                          Text("😊", style: TextStyle(fontSize: 24))
+                        ]),
+                        Column(children: [
+                          Text("Ter",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black54)),
+                          SizedBox(height: 8),
+                          Text("🥳", style: TextStyle(fontSize: 24))
+                        ]),
+                        Column(children: [
+                          Text("Qua",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black54)),
+                          SizedBox(height: 8),
+                          Text("🥰", style: TextStyle(fontSize: 24))
+                        ]),
+                        Column(children: [
+                          Text("Qui",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black54)),
+                          SizedBox(height: 8),
+                          Text("😂", style: TextStyle(fontSize: 24))
+                        ]),
+                        Column(children: [
+                          Text("Sex",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black54)),
+                          SizedBox(height: 8),
+                          Text("😅", style: TextStyle(fontSize: 24))
+                        ]),
+                        Column(children: [
+                          Text("Sab",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black54)),
+                          SizedBox(height: 8),
+                          Text("😂", style: TextStyle(fontSize: 24))
+                        ]),
+                        Column(children: [
+                          Text("Dom",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black54)),
+                          SizedBox(height: 8),
+                          Text("🤢", style: TextStyle(fontSize: 24))
+                        ]),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 20),
+            ],
           ),
         ),
       ),
 
-      // 6. Conectado o estado e a função à BottomNavigationBar.
+      // BottomNavigationBar
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.purple,
+        selectedItemColor: const Color(0xFFF8B5FA),
         unselectedItemColor: Colors.black54,
+        backgroundColor: Colors.white,
+        elevation: 8,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Início"),
           BottomNavigationBarItem(
@@ -414,6 +458,7 @@ class _MainState extends State<Main> {
               icon: Icon(Icons.library_music), label: "Playlist"),
           BottomNavigationBarItem(
               icon: Icon(Icons.thermostat), label: "Termômetro"),
+          BottomNavigationBarItem(icon: Icon(Icons.send), label: "Contato"),
         ],
       ),
     );

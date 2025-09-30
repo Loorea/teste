@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:midleapp/screens/loginscreen.dart';
 import 'package:midleapp/screens/registroscreen.dart';
 import 'package:midleapp/screens/thermometer_screen.dart'; // 1. Importe a nova tela
+import 'package:midleapp/screens/contactscreen.dart';
 import 'options/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:midleapp/screens/homescreen.dart';
@@ -30,7 +31,9 @@ class MyApp extends StatelessWidget {
         '/': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),
         '/home': (context) => const HomeScreen(),
-        '/thermometer': (context) => const ThermometerScreen(), // 2. Adicione a nova rota
+        '/thermometer': (context) =>
+            const ThermometerScreen(), // 2. Adicione a nova rota
+        '/contato': (context) => const ContactScreen(),
       },
     );
   }
